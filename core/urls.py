@@ -15,7 +15,7 @@ urlpatterns = [
     # Admin y otras configuraciones
     path('admin/', admin.site.urls),
     
-] 
+]
 
 # Rutas de React o frontend
 
