@@ -11,7 +11,7 @@ ENVIRONMENT = env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = '6bd-kqagl#_2evl#hcgi(f*_q(*=xgc%)1gmra2)046g%()q$y'
 
 DOMAIN = '.vercel.app'
 
