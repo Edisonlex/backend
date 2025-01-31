@@ -1,4 +1,3 @@
-django
 amqp
 argon2-cffi
 argon2-cffi-bindings
@@ -24,6 +23,7 @@ constantly
 cryptography
 daphne
 Deprecated
+Django
 django-ckeditor
 django-cors-headers
 django-environ

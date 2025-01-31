@@ -21,10 +21,9 @@ SITE_NAME = 'SoloPython'
 DEBUG = True
 
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1"
-]
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
 
 if not DEBUG:
     ALLOWED_HOSTS = [
@@ -33,9 +32,7 @@ if not DEBUG:
         "www.solopython.com"
     ]
 
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 # Application definition
 
@@ -128,10 +125,15 @@ UNFOLD = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ss_rqi6',
+        'USER': 'ss_rqi6_user',
+        'PASSWORD': '0UVM0sEThKOS9d6uqYGPvP2vPe0yIPAu',
+        'HOST': 'dpg-cuekfhq3esus73edb0r0-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 CORS_ORIGIN_WHITELIST = [
