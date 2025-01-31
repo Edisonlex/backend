@@ -132,26 +132,22 @@ DATABASES = {
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    'https://front-one-alpha.vercel.app/',
     'http://localhost:8000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    'http://localhost:8000',
+    'https://front-one-alpha.vercel.app/',
+    'https://front-one-alpha.vercel.app/',
 ]
 
 if not DEBUG:
     CORS_ORIGIN_WHITELIST = [
-        'https://solopython.com',
-        'https://admin.solopython.com',
-        'https://blog.solopython.com',
+        'https://front-one-alpha.vercel.app/',
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'hhttps://solopython.com',
-        'https://admin.solopython.com',
-        'https://blog.solopython.com',
+        'https://front-one-alpha.vercel.app/',
     ]
 
 
