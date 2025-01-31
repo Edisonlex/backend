@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
 ]
+# Agregar esta línea para habilitar la carga de imágenes en el admin
 
 # Rutas de React o frontend
 
