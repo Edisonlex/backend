@@ -21,16 +21,9 @@ SITE_NAME = 'SoloPython'
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+ALLOWED_HOSTS = [".vercel.app"]
 
 
-if not DEBUG:
-    ALLOWED_HOSTS = [
-        "solopython.com",
-        ".solopython.com",
-        "www.solopython.com"
-    ]
 
 
 
