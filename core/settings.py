@@ -132,22 +132,22 @@ DATABASES = {
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 CORS_ORIGIN_WHITELIST = [
-    'https://front-one-alpha.vercel.app/',
-    'http://localhost:8000',
+    '.vercel.app',
+    '.vercel.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://front-one-alpha.vercel.app/',
+    '.vercel.app',
     'https://front-one-alpha.vercel.app/',
 ]
 
 if not DEBUG:
     CORS_ORIGIN_WHITELIST = [
-        'https://front-one-alpha.vercel.app/',
+        '.vercel.app',
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'https://front-one-alpha.vercel.app/',
+        '.vercel.app',
     ]
 
 
