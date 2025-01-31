@@ -14,12 +14,10 @@ urlpatterns = [
 
     # Admin y otras configuraciones
     path('admin/', admin.site.urls),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+] 
 
 # Rutas de React o frontend
-urlpatterns += [
-    re_path(r'^(?!api/).*$', TemplateView.as_view(template_name='index.html')),
-]
+
 if settings.DEBUG:
  urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
