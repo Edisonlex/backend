@@ -8,7 +8,6 @@ environ.Env.read_env()
 
 ENVIRONMENT = env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '6bd-kqagl#_2evl#hcgi(f*_q(*=xgc%)1gmra2)046g%()q$y'
@@ -18,17 +17,10 @@ DOMAIN = '.vercel.app'
 
 SITE_NAME = 'SoloPython'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 
 ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
-
-
-
-
-
-# Application definition
 
 DJANGO_APPS = [
     'unfold',
@@ -51,9 +43,10 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
-    
+    'ckeditor',
+    'ckeditor_uploader',
 ]
-import os
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -74,7 +67,6 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     }
 }
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -115,9 +107,6 @@ UNFOLD = {
     "footer_text": "Mi Proyecto - Todos los derechos reservados",  # Texto en el pie de página
 }
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -150,17 +139,12 @@ if not DEBUG:
         '.vercel.app',
     ]
 
-
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -176,23 +160,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 USE_L10N = True
-
-
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -213,18 +186,13 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-
 FILE_UPLOAD_PERMISSIONS = 0o640
 
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
-
-
 AUTH_USER_MODEL = 'user.UserAccount'
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-
 if not DEBUG:
     DEFAULT_FROM_EMAIL="Uridium <mail@uridium.network>"
     EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
@@ -233,9 +201,4 @@ if not DEBUG:
     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
     EMAIL_PORT = env('EMAIL_PORT')
     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-
-    
-    # django-ckeditor will not work with S3 through django-storages without this line in settings.py
-   
-    # s3 static settings
 
