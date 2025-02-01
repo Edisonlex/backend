@@ -1,73 +1,33 @@
 from django.contrib import admin
-from .models import Contact, Newsletter
 from unfold.admin import ModelAdmin
-from django.utils.html import format_html
-from django.utils.timesince import timesince
+from .models import Contact, Newsletter
 
 @admin.register(Contact)
 class ContactAdmin(ModelAdmin):
-    list_display = ('name', 'email', 'subject', 'phone', 'display_budget', 'time_since_contact')
-    list_filter = ('contact_date', 'budget')
-    search_fields = ('name', 'email', 'subject', 'message', 'phone')
-    readonly_fields = ('contact_date',)
-    date_hierarchy = 'contact_date'
-    
-    fieldsets = (
-        ('Contact Information', {
-            'fields': ('name', 'email', 'phone')
-        }),
-        ('Message Details', {
-            'fields': ('subject', 'message', 'budget')
-        }),
-        ('Metadata', {
-            'fields': ('contact_date',),
-            'classes': ('collapse',)
-        }),
-    )
-
-    def display_budget(self, obj):
-        if obj.budget:
-            return format_html('<span style="background: #e8f5e9; padding: 3px 10px; border-radius: 10px;">{}</span>', obj.budget)
-        return format_html('<span style="color: #999;">No budget</span>')
-    display_budget.short_description = 'Budget'
-
-    def time_since_contact(self, obj):
-        return format_html('<span title="{}">{} ago</span>', 
-                         obj.contact_date.strftime('%Y-%m-%d %H:%M:%S'),
-                         timesince(obj.contact_date))
-    time_since_contact.short_description = 'Time Since Contact'
-
-    # Personalización adicional
-    save_on_top = True
-    list_per_page = 25
-    ordering = ('-contact_date',)
-
+    list_display = ('name', 'email', 'contact_date')
+    search_fields = ('name', 'email')
+    list_filter = ('contact_date',)
 
 @admin.register(Newsletter)
 class NewsletterAdmin(ModelAdmin):
-    list_display = ('email', 'subscription_date', 'time_subscribed')
-    list_filter = ('subscription_date',)
+    list_display = ('email', 'subscription_date')
     search_fields = ('email',)
-    readonly_fields = ('subscription_date',)
-    date_hierarchy = 'subscription_date'
-    
-    fieldsets = (
-        ('Subscription Information', {
-            'fields': ('email', 'subscription_date')
-        }),
-    )
+    list_filter = ('subscription_date',)
 
-    def time_subscribed(self, obj):
-        return format_html('<span title="{}">{} ago</span>', 
-                         obj.subscription_date.strftime('%Y-%m-%d %H:%M:%S'),
-                         timesince(obj.subscription_date))
-    time_subscribed.short_description = 'Subscribed'
+class ContactoAppAdmin(admin.AdminSite):
+    site_header = 'Contacto App'
 
-    # Personalización adicional
-    save_on_top = True
-    list_per_page = 50
-    ordering = ('-subscription_date',)
+    def get_app_list(self, request):
+        app_list = super().get_app_list(request)
+        # Personaliza la lista de aplicaciones
+        for app in app_list:
+            if app['name'] == 'Contacto':
+                app['models'] = [
+                    {'name': 'Contacts', 'admin_url': '/admin/contacto/contact/'},
+                    {'name': 'Newsletter', 'admin_url': '/admin/contacto/newsletter/'},
+                ]
+        return app_list
 
-    def has_change_permission(self, request, obj=None):
-        # Solo permitir ver y eliminar suscriptores, no editar
-        return False
+contacto_admin_site = ContactoAppAdmin(name='contacto_admin')
+contacto_admin_site.register(Contact, ContactAdmin)
+contacto_admin_site.register(Newsletter, NewsletterAdmin)
