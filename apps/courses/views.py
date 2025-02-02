@@ -1038,11 +1038,9 @@ class ViewSection(APIView):
 
 
 class ViewEpisode(APIView):
-    def get(self, request,episode_uuid, format=None):
+    def get(self, request, episode_uuid, format=None):
         episode = get_object_or_404(Episode, episode_uuid=episode_uuid)
-
         serializer = EpisodePaidSerializer(episode)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

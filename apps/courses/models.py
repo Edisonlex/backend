@@ -181,7 +181,7 @@ class Episode(models.Model):
     title = models.CharField(max_length=255, verbose_name='Título')
     file = models.URLField(verbose_name='Archivo (URL)')
     content = models.TextField(verbose_name='Contenido')
-    length = models.DecimalField(max_digits=100, decimal_places=2, verbose_name='Duración')
+    length = models.DecimalField(max_digits=100, decimal_places=2, verbose_name='Duración')  # Este campo ahora se puede llenar manualmente
     resources = models.ManyToManyField('Resource', blank=True, verbose_name='Recursos')
     questions = models.ManyToManyField('Question', blank=True, verbose_name='Preguntas')
     episode_number = models.IntegerField(blank=True, null=True, verbose_name='Número de episodio')
@@ -195,19 +195,9 @@ class Episode(models.Model):
     def __str__(self):
         return self.title
 
-    def get_video_length(self):
-        try:
-            video=MP4(self.file)
-            return video.info.length
-        except MP4StreamInfoError:
-            return 0.0
-
+    # Ya no es necesario obtener la longitud del video desde el archivo
     def get_video_length_time(self):
         return get_timer(self.length)
-
-    def save(self,*args, **kwargs):
-        self.length=self.get_video_length()
-        return super().save(*args, **kwargs)
 
 
 class Question(models.Model):

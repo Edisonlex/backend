@@ -90,7 +90,7 @@ class ResourceSerializer(serializers.ModelSerializer):
         fields = ["title", "file", "id"]
 
 class EpisodeUnPaidSerializer(serializers.ModelSerializer):
-    length = serializers.CharField(source='get_video_length_time')
+    length = serializers.CharField(source='get_video_length_time')  # Mantienes el formato del tiempo
     resources = ResourceSerializer(many=True)
     questions = serializers.StringRelatedField(many=True)
 
