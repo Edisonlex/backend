@@ -58,22 +58,22 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'autoParagraph': False,
-        'entities': False,
-        'entities_latin': False,
-        'entities_greek': False,
-        'entities_processNumerical': False,
-        'forcePasteAsPlainText': True,
-        'allowedContent': True,
-        'removePlugins': 'stylesheetparser',
-        'extraPlugins': 'codesnippet',
-        'height': 400,
-        'width': '100%',
-    }
-}
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         'autoParagraph': False,
+#         'entities': False,
+#         'entities_latin': False,
+#         'entities_greek': False,
+#         'entities_processNumerical': False,
+#         'forcePasteAsPlainText': True,
+#         'allowedContent': True,
+#         'removePlugins': 'stylesheetparser',
+#         'extraPlugins': 'codesnippet',
+#         'height': 400,
+#         'width': '100%',
+#     }
+# }
 
 
 MIDDLEWARE = [
@@ -188,12 +188,6 @@ TIME_ZONE = 'America/Guayaquil'
 USE_I18N = True
 USE_L10N = True
 
-
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -234,8 +228,4 @@ if not DEBUG:
     EMAIL_PORT = env('EMAIL_PORT')
     EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 
-    
-    # django-ckeditor will not work with S3 through django-storages without this line in settings.py
-   
-    # s3 static settings
 

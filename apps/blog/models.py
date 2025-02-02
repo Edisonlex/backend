@@ -1,9 +1,7 @@
-# apps/blog/models.py
 from django.db import models
 import uuid
 from django.utils import timezone
 from apps.category.models import Category
-from ckeditor_uploader.fields import RichTextUploadingField
 
 def blog_directory_path(instance, filename):
     return 'blog/{0}/{1}'.format(instance.title, filename)
@@ -23,8 +21,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True)
     thumbnail = models.ImageField(upload_to=blog_directory_path)
     video = models.FileField(upload_to=blog_directory_path, blank=True, null=True)
-    # Cambiamos TextField por RichTextUploadingField
-    description = RichTextUploadingField()
+    description = models.TextField()  # Cambiado de RichTextUploadingField a TextField
     excerpt = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     published = models.DateTimeField(default=timezone.now)
