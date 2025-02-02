@@ -87,12 +87,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resource
-        fields = [
-            "title",
-            "file", 
-            "url",
-            "id"
-        ]
+        fields = ["title", "file", "id"]
 
 class EpisodeUnPaidSerializer(serializers.ModelSerializer):
     length = serializers.CharField(source='get_video_length_time')

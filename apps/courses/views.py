@@ -871,56 +871,54 @@ class CreateSectionCourseView(APIView):
 
 
 class CreateResourceView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
     def post(self, request, format=None):
         data = self.request.data
 
         account = data['account']
         user = UserAccount.objects.get(account=account)
 
-        title=data['resource_title']
-        file=data['file']
-        course_uuid=data['course_uuid']
+        title = data['resource_title']
+        file_url = data['file']  # Ahora se espera una URL en vez de un archivo
+        course_uuid = data['course_uuid']
 
         course = Course.objects.get(course_uuid=course_uuid)
 
-        if(user == course.author):
-            resource = Resource(title=title, file=file, user=user)
+        if user == course.author:
+            resource = Resource(title=title, file=file_url, user=user)  # Se guarda la URL
             resource.save()
             course.resources.add(resource)
 
-        return Response({'success': 'Message sent successfully'})
+        return Response({'success': 'Recurso guardado correctamente'})
 
 
 class EditResourceView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
     def post(self, request, format=None):
         data = self.request.data
 
         account = data['account']
         user = UserAccount.objects.get(account=account)
 
-        title=data['resource_title']
-        file=data['file']
-        resource_id=data['resource_id']
+        title = data['resource_title']
+        file_url = data['file']  # Ahora es una URL
+        resource_id = data['resource_id']
 
         resource = Resource.objects.get(id=resource_id)
         
         resource.title = title
-        resource.file=file
+        resource.file = file_url  # Se actualiza con la nueva URL
 
         resource.save()
 
-        return Response({'success': 'Message sent successfully'})
+        return Response({'success': 'Recurso actualizado correctamente'})
 
 
 class ResourceDetailView(APIView):
     permission_classes = (permissions.AllowAny,)
+
     def get(self, request, resource_id, format=None):
         resource = get_object_or_404(Resource, id=resource_id)
         serializer = ResourceSerializer(resource)
         return Response({'resource': serializer.data})
-
 
 class ResourceDeleteView(APIView):
     permission_classes = (permissions.AllowAny,)

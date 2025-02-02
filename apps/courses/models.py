@@ -58,8 +58,8 @@ class Course(models.Model):
     course_uuid = models.UUIDField(default=uuid.uuid4, unique=True, verbose_name='UUID del curso')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Autor')
     title = models.CharField(max_length=255, verbose_name='Título')
-    thumbnail = models.ImageField(upload_to=course_directory_path, verbose_name='Miniatura')
-    sales_video = models.FileField(upload_to=course_directory_path, verbose_name='Video promocional')
+    thumbnail = models.URLField(verbose_name='Miniatura (URL)')
+    sales_video = models.URLField(verbose_name='Video promocional (URL)')  
     description = models.TextField(verbose_name='Descripción')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
@@ -94,14 +94,10 @@ class Course(models.Model):
         return self.title
 
     def get_video(self):
-        if self.thumbnail:
-            return self.sales_video.url
-        return ''
+        return self.sales_video if self.sales_video else ''
 
     def get_thumbnail(self):
-        if self.thumbnail:
-            return self.thumbnail.url
-        return ''
+        return self.thumbnail if self.thumbnail else ''
 
     def get_rating(self):
         ratings=self.rating.all()
@@ -183,7 +179,7 @@ class CourseSection(models.Model):
 class Episode(models.Model):
     episode_uuid = models.UUIDField(default=uuid.uuid4, unique=True, verbose_name='UUID del episodio')
     title = models.CharField(max_length=255, verbose_name='Título')
-    file = models.FileField(upload_to=course_directory_path, validators=[validate_is_video], verbose_name='Archivo')
+    file = models.URLField(verbose_name='Archivo (URL)')
     content = models.TextField(verbose_name='Contenido')
     length = models.DecimalField(max_digits=100, decimal_places=2, verbose_name='Duración')
     resources = models.ManyToManyField('Resource', blank=True, verbose_name='Recursos')
@@ -283,8 +279,7 @@ class Votes(models.Model):
 
 class Resource(models.Model):
     title = models.CharField(max_length=255, verbose_name='Título')
-    file = models.FileField(upload_to=course_directory_path, blank=True, null=True, verbose_name='Archivo')
-    url = models.URLField(blank=True, null=True, verbose_name='URL')
+    file = models.URLField(blank=True, null=True, verbose_name='Archivo (URL)')  # Ahora almacena la URL
     user = models.CharField(max_length=255, verbose_name='Usuario')
 
     class Meta:
@@ -295,7 +290,7 @@ class Resource(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return self.file.url
+        return self.file
 
 
 class Comment(models.Model):
