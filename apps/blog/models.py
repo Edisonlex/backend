@@ -3,9 +3,6 @@ import uuid
 from django.utils import timezone
 from apps.category.models import Category
 
-def blog_directory_path(instance, filename):
-    return 'blog/{0}/{1}'.format(instance.title, filename)
-
 class Post(models.Model):
     class PostObjects(models.Manager):
         def get_queryset(self):
@@ -19,9 +16,9 @@ class Post(models.Model):
     blog_uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    thumbnail = models.ImageField(upload_to=blog_directory_path)
-    video = models.FileField(upload_to=blog_directory_path, blank=True, null=True)
-    description = models.TextField()  # Cambiado de RichTextUploadingField a TextField
+    thumbnail = models.URLField(blank=True, null=True)  # Cambiado de ImageField a URLField
+    video = models.URLField(blank=True, null=True)  # Cambiado de FileField a URLField
+    description = models.TextField()
     excerpt = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     published = models.DateTimeField(default=timezone.now)
@@ -38,10 +35,10 @@ class Post(models.Model):
 
     def get_video(self):
         if self.video:
-            return self.video.url
+            return self.video  # Devuelve la URL directamente
         return ''
 
     def get_thumbnail(self):
         if self.thumbnail:
-            return self.thumbnail.url
+            return self.thumbnail  # Devuelve la URL directamente
         return ''
