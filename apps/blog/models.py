@@ -2,7 +2,6 @@ from django.db import models
 import uuid
 from django.utils import timezone
 from apps.category.models import Category
-from tinymce.models import HTMLField
 
 class Post(models.Model):
     class PostObjects(models.Manager):
@@ -19,7 +18,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True)
     thumbnail = models.URLField(blank=True, null=True)  # Cambiado de ImageField a URLField
     video = models.URLField(blank=True, null=True)  # Cambiado de FileField a URLField
-    description = HTMLField()
+    description = models.TextField()
     excerpt = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     published = models.DateTimeField(default=timezone.now)
